@@ -12,5 +12,6 @@ router.post('/add-policy', verifyToken, adminController.addPolicyData);
 router.put('/update-policy/:id', verifyToken, adminController.updatePolicyData);
 router.delete('/delete-policy/:id', verifyToken, adminController.deletePolicyData);
 router.get('/get-policy', verifyToken, adminController.getPolicyData);
+router.post('/validate-policy', adminController.validatePolicy);
 
 module.exports = router;

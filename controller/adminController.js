@@ -131,3 +131,23 @@ exports.getPolicyData = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message || err });
     }
 };
+
+exports.validatePolicy = async (req, res) => {
+    try {
+        const { surname, dateOfBirth, startDate } = req.body;
+        
+        const policy = await Policy.findOne({
+            userSurname: surname,
+            dob: new Date(dateOfBirth),
+            startDate: new Date(startDate)
+        });
+
+        if (!policy) {
+            return res.status(404).json({ message: 'No policy found with provided details' });
+        }
+
+        res.status(200).json(policy);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+};
