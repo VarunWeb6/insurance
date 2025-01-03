@@ -1,0 +1,84 @@
+.formContainer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    width: 400px;
+  }
+  
+  .description {
+    color: #666;
+    margin-bottom: 32px;
+    max-width: 800px;
+  }
+  
+  .formWrapper {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .form {
+    flex: 2;
+  }
+  
+  .formGroup {
+    margin-bottom: 24px;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1e3c87;
+    font-weight: 500;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .inputWithIcon {
+    position: relative;
+  }
+  
+  .calendarIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+  }
+  
+  .submitButton {
+    background-color: #95c11f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .submitButton:hover {
+    background-color: #86af1b;
+  }
+  
+  .infoBox {
+    flex: 1;
+  }
+  
+  .infoItem {
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  

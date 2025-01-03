@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  justify-content: center; /* Centers items horizontally */
+  align-items: center;    /* Centers items vertically */
+  padding: 10px 20px;
+  background-color: rgb(242,242,242);
+  border-bottom: 1px solid #e5e5e5;
+}
+
+  
+  .nav {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .link {
+    color: #1e3c87;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  
+  .socialIcons {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+  }
+  
+  .icon {
+    color: #1e3c87;
+    font-size: 18px;
+  }
+  
+  .icon:hover {
+    opacity: 0.8;
+  }
+  
+  
