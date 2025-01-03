@@ -1,8 +1,8 @@
-const AdminData = require('../models/adminModel');
+const Policy = require('../models/policyModel');  // Change to use Policy model
+const Admin = require('../models/adminModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Admin = require('../models/adminModel');  // Ensure correct reference to Admin model
-const authenticateAdmin = require('../middleware/authMiddleware'); // Adjust the path accordingly
+const authenticateAdmin = require('../middleware/authMiddleware');
 
 // Admin Registration
 exports.register = async (req, res) => {
@@ -57,17 +57,16 @@ exports.login = async (req, res) => {
 
 exports.addPolicyData = [authenticateAdmin, async (req, res) => {
     try {
-        const { userName, userSurname, policyId, policyDescription, policyType, startDate, endDate, policyAmount } = req.body;
+        const { userName, userSurname, policyId, policyDescription, policyType, startDate, endDate, policyAmount, dob } = req.body;
 
-        // Ensure admin ID is available from the token
-        const adminId = req.admin._id;  // This comes from the JWT payload
-
-        if (!userName || !userSurname || !policyId || !policyDescription || !policyType || !startDate || !endDate || !policyAmount) {
+        // Validate required fields
+        if (!userName || !userSurname || !policyId || !policyDescription || !policyType || 
+            !startDate || !endDate || !policyAmount || !dob) {
             return res.status(400).json({ error: 'All fields are required' });
         }
 
-        // Create new policy data without involving the admin's full data
-        const newPolicy = new AdminData({
+        // Create new policy using the Policy model
+        const newPolicy = new Policy({
             userName,
             userSurname,
             policyId,
@@ -76,7 +75,7 @@ exports.addPolicyData = [authenticateAdmin, async (req, res) => {
             startDate,
             endDate,
             policyAmount,
-            addedBy: adminId  // Only store the admin ID
+            dob
         });
 
         await newPolicy.save();
@@ -87,13 +86,10 @@ exports.addPolicyData = [authenticateAdmin, async (req, res) => {
     }
 }];
 
-
-
-
 exports.updatePolicyData = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedPolicyData = await AdminData.findByIdAndUpdate(
+        const updatedPolicyData = await Policy.findByIdAndUpdate(
             id,
             { $set: req.body },
             { new: true }
@@ -109,10 +105,11 @@ exports.updatePolicyData = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message || err });
     }
 };
+
 exports.deletePolicyData = async (req, res) => {
     try {
         const { id } = req.params;
-        const deletedPolicyData = await AdminData.findByIdAndDelete(id);
+        const deletedPolicyData = await Policy.findByIdAndDelete(id);
 
         if (!deletedPolicyData) {
             return res.status(404).json({ message: 'Policy data not found' });
@@ -124,13 +121,13 @@ exports.deletePolicyData = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message || err });
     }
 };
+
 exports.getPolicyData = async (req, res) => {
     try {
-        const policyData = await AdminData.find();
+        const policyData = await Policy.find();
         res.status(200).json(policyData);
     } catch (err) {
         console.error('Error fetching policy data:', err);
         res.status(500).json({ message: 'Server error', error: err.message || err });
     }
 };
-
