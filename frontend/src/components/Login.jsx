@@ -5,16 +5,25 @@ import axios from 'axios';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setMessage('Submitting...');
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-      console.log('Login successful:', response.data.message);
+      setMessage('Login successful!');
+      setIsSubmitting(false);
+      setEmail('');
+      setPassword('');
+      // Uncomment to redirect after successful login
       navigate('/');
     } catch (err) {
-      console.error('Login error:', err.response ? err.response.data.message : 'Server error');
+      setMessage(err.response ? err.response.data.message : 'Server error');
+      setIsSubmitting(false);
     }
   };
 
@@ -29,6 +38,11 @@ const Login = () => {
       </nav>
 
       <div className="max-w-md mx-auto mt-8 p-6">
+        {message && (
+          <div className={`p-4 mb-4 rounded ${message === 'Login successful!' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            {message}
+          </div>
+        )}
         <h2 className="text-xl mb-6">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -53,9 +67,10 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-6 py-2 rounded"
+            className={`px-6 py-2 rounded ${isSubmitting ? 'bg-green-500' : 'bg-blue-500'} text-white`}
+            disabled={isSubmitting}
           >
-            Submit
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </button>
         </form>
       </div>
