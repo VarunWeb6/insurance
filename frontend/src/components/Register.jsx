@@ -20,7 +20,7 @@ const Register = () => {
       setEmail('');
       setPassword('');
       // Uncomment to redirect after successful registration
-      // navigate('/login');
+      navigate('/login');
     } catch (err) {
       setMessage(err.response ? err.response.data.message : 'Server error');
       setIsSubmitting(false);
